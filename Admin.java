@@ -6,6 +6,25 @@ public class Admin {
     private static final String INVENTORY_FILE = "inventory.txt";
     private static final String CHARACTERS = "ZACF0123456";
     private static final int ID_LENGTH = 3;
+    private static final String ADMIN_USERNAME = "admin";
+    private static final String ADMIN_PASSWORD = "1234";
+    private static final String CASHIER_FILE = "cashiers.txt";
+
+    public static void adminLogin() {
+        System.out.print("Enter admin username: ");
+        String enteredUsername = sc.next();
+        System.out.print("Enter admin password: ");
+        String enteredPassword = sc.next();
+
+        if (enteredUsername.equals(ADMIN_USERNAME) && enteredPassword.equals(ADMIN_PASSWORD)) {
+            System.out.println("Successfully logged in.");
+            Admin admin = new Admin();
+            admin.displayAdmin();
+        } else {
+            System.out.println("Incorrect username or password.");
+            Main.MainDisplay();
+        }
+    }
 
     public static String generateProductID(){
         StringBuilder sb = new StringBuilder(ID_LENGTH);
@@ -27,10 +46,11 @@ public class Admin {
             System.out.println("|| Welcome to E-GroceMarket! Please enter your choices ||");
             System.out.println("||=====================================================||");
             System.out.println("||                                                     ||");
-            System.out.println("||     A. Add Item                                     ||");
-            System.out.println("||     B. Update Quantity                              ||");
-            System.out.println("||     C. Display Inventory                            ||");
-            System.out.println("||     D. Return                                       ||");
+            System.out.println("||     A. Add Cashier                                  ||");
+            System.out.println("||     B. Add Product                                  ||");
+            System.out.println("||     C. Update Quantity                              ||");
+            System.out.println("||     D. Display Inventory                            ||");
+            System.out.println("||     E. Return                                       ||");
             System.out.println("||                                                     ||");
             System.out.println("||=====================================================||");
 
@@ -42,6 +62,42 @@ public class Admin {
             //Switch Case
             switch (choice){
                 case 'A':
+                    try {
+                        String cashierName;
+                        String cashierUsername;
+                        String cashierPassword;
+
+                        String lettersOnly = "^[A-Za-z]+$";
+
+                        // Validation
+                        do {
+                            System.out.print("Enter Cashier Name: ");
+                            cashierName = sc.next();
+                            if (cashierName.matches(lettersOnly)) {
+                                break;
+                            } else {
+                                System.out.println("Only accepts alphabetical characters");
+                            }
+                        } while (!cashierName.matches(lettersOnly));
+
+                        System.out.print("Enter Cashier Username: ");
+                        cashierUsername = sc.next();
+
+                        System.out.print("Enter Cashier Password: ");
+                        cashierPassword = sc.next();
+                        // End validation
+
+                        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(CASHIER_FILE, true));
+
+                        bufferedWriter.write(cashierName + " " + cashierUsername + " " + cashierPassword + "\n");
+                        System.out.println("Cashier added successfully.");
+                        bufferedWriter.close();
+
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 'B':
                     try {
                         String productName;
                         String productQuantity;
@@ -95,7 +151,7 @@ public class Admin {
                     }
                     break;
 
-                case 'B':
+                case 'C':
                     String productName;
                     int addQuantity = 0;
                     String lettersOnly = "^[A-Za-z]+$";
@@ -167,7 +223,7 @@ public class Admin {
                     }
                     break;
 
-                case 'C':
+                case 'D':
                     try(BufferedReader br = new BufferedReader(new FileReader(INVENTORY_FILE))){
                         System.out.println("||===========  E-GroceMarket Inventory System ===========||");
                         System.out.println("||                                                       ||");
@@ -194,7 +250,7 @@ public class Admin {
                         e.printStackTrace();
                     }
                     break;
-                case 'D':
+                case 'E':
                     Main.MainDisplay();
                     break;
             }
