@@ -2,13 +2,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
-
 public class Cashier {
     static Scanner sc = new Scanner(System.in);
     private static final String INVENTORY_FILE = "inventory.txt";
     private static final String RECEIPT_FILE = "checkout.txt";
     private static final String CASHIER_FILE = "cashiers.txt";
-
     public void cashierLogin() {
         System.out.print("Enter your username: ");
         String DUsername = sc.next();
@@ -42,7 +40,6 @@ public class Cashier {
             System.out.println("Error reading the cashier file.");
         }
     }
-
     public void displayCashier(){
         while(true) {
             System.out.println("\n||=====================================================||");
@@ -124,7 +121,6 @@ public class Cashier {
 
                         String convertInt = Integer.toString(quantityChoice);
                         if(productChoice.matches(validation) && convertInt.matches(validation)){
-                            System.out.println("Checkout:");
                             //List item and total price
                             break;
                         }else{
