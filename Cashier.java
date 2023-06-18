@@ -1,6 +1,4 @@
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
@@ -9,6 +7,41 @@ public class Cashier {
     static Scanner sc = new Scanner(System.in);
     private static final String INVENTORY_FILE = "inventory.txt";
     private static final String RECEIPT_FILE = "checkout.txt";
+    private static final String CASHIER_FILE = "cashiers.txt";
+
+    public void cashierLogin() {
+        System.out.print("Enter your username: ");
+        String DUsername = sc.next();
+        System.out.print("Enter your password: ");
+        String DPassword = sc.next();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(CASHIER_FILE))) {
+            String line;
+            boolean found = false;
+
+            while ((line = reader.readLine()) != null) {
+                String[] tokens = line.split(" ");
+
+                if (tokens[1].equals(DUsername) && tokens[2].equals(DPassword)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                System.out.println("Successfully logged in.");
+                displayCashier();
+            } else {
+                System.out.println("Incorrect username or password.");
+                Main main = new Main();
+                main.MainDisplay();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("No records found.");
+        } catch (IOException e) {
+            System.out.println("Error reading the cashier file.");
+        }
+    }
 
     public void displayCashier(){
         while(true) {
