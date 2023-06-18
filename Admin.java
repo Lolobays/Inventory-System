@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.*;
-
 public class Admin {
     static Scanner sc = new Scanner(System.in);
     private static final String INVENTORY_FILE = "inventory.txt";
@@ -225,7 +224,8 @@ public class Admin {
 
                 case 'D':
                     try(BufferedReader br = new BufferedReader(new FileReader(INVENTORY_FILE))){
-                        System.out.println("||===========  E-GroceMarket Inventory System ===========||");
+                        System.out.println("||==================  E-GroceMarket Inventory System ==================||");
+
                         System.out.println("||                                                       ||");
 
                         String line;
@@ -242,7 +242,7 @@ public class Admin {
                                 System.out.println("||-----------------------------------------------------");
                             }
                         }
-                        System.out.println("||_________________________________________________________||");
+                        System.out.println("||_____________________________________________________________________||");
 
                     }catch(FileNotFoundException e){
                         System.out.println("Empty Inventory!");
@@ -254,7 +254,6 @@ public class Admin {
                     Main.MainDisplay();
                     break;
             }
-
             //Switch Case
         }
     }
